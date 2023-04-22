@@ -1,0 +1,134 @@
+\documentclass[a4paper]{report}
+\usepackage[bottom]{footmisc}
+%====================== PACKAGES ======================
+\usepackage{amsthm}
+\usepackage{tabto}
+
+% \newtheorem{theo}{Theorem}[section]
+% \newtheorem{coro}{Corollary}[Theorem]
+% \newtheorem{defi}{Definition}[section]
+% \newtheorem{rem}{Remark}[section]
+
+
+% \usepackage{lesson}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{rotating}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{perpage}
+\MakePerPage{footnote}
+\usepackage{float}
+
+\usepackage{bbold}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage[french]{babel}
+\usepackage{ntheorem}
+%pour gérer les positionnement d'images
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{url}
+%pour les informations sur un document compilé en PDF et les liens externes / internes
+\usepackage{hyperref}
+%pour la mise en page des tableaux
+\usepackage{array}
+% \usepackage{tabularx}
+%pour utiliser \floatbarrier
+%\usepackage{placeins}
+%\usepackage{floatrow}
+%espacement entre les lignes
+\usepackage{setspace}
+%modifier la mise en page de l'abstract
+\usepackage{abstract}
+%police et mise en page (marges) du document
+\usepackage[T1]{fontenc}
+\usepackage[top=2cm, bottom=2.5cm, left=3.5cm, right=3.5cm]{geometry}
+%Pour les galerie d'images
+\usepackage{subfig}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\date{}
+%Algo
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+%====================== INFORMATION ET REGLES ======================
+
+%rajouter les numérotation pour les \paragraphe et \subparagraphe
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+
+\usepackage[explicit, clearempty]{titlesec}
+\titleformat{\chapter}[display]{\bfseries\filright}{\huge\chaptername~\thechapter}{20pt}{\Huge#1}
+\titleformat{name=\chapter, numberless}[display]{\bfseries\filright}{}{0pt}{\Huge#1}[\addcontentsline{toc}{chapter}{#1}]
+
+
+\usepackage{makecell}
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+\renewcommand{\cellalign}{vh}
+\renewcommand{\theadalign}{vh}
+
+%======================== DEBUT DU DOCUMENT ========================
+
+\begin{document}
+
+%régler l'espacement entre les lignes
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+%page de garde
+\input{title.tex}
+
+%page blanche
+%\newpage
+%~
+%ne pas numéroter cette page
+\thispagestyle{empty}
+
+
+\tableofcontents
+\thispagestyle{empty}
+\setcounter{page}{0}
+%ne pas numéroter le sommaire
+
+%\newpage
+
+%espacement entre les lignes d'un tableau
+\renewcommand{\arraystretch}{1.5}
+
+%====================== INCLUSION DES PARTIES ======================
+
+
+\thispagestyle{empty}
+%recommencer la numérotation des pages à "1"
+\setcounter{page}{0}
+\newpage
+
+\input{introduction.tex}
+\input{chapitre1.tex}
+\input{chapitre2.tex}
+\input{chapitre3.tex}
+\input{Conclusion.tex}
+
+\newpage
+
+%récupérer les citation avec "/footnotemark"
+
+%choix du style de la biblio
+\bibliographystyle{unsrt}
+%inclusion de la biblio
+\bibliography{bibliographie}
+%voir wiki pour plus d'information sur la syntaxe des entrées d'une bibliographie
+\input{New version Report/annexe1.tex}
+\end{document}

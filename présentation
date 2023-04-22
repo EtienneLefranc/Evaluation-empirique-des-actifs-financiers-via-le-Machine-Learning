@@ -1,0 +1,467 @@
+\documentclass[fleqn]{beamer}
+\usepackage[english]{babel}
+\usepackage{float}
+\usepackage{ dsfont }
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{graphicx}
+\usepackage{tikz}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+% vertical separator macro
+\newcommand{\vsep}{
+  \column{0.0\textwidth}
+    \begin{tikzpicture}
+      \draw[very thick,black!10] (0,0) -- (0,7.3);
+    \end{tikzpicture}
+}
+
+% More space between lines in align
+\setlength{\mathindent}{0pt}
+
+\AtBeginSection[]
+{
+    \begin{frame}
+        \frametitle{Sommaire}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+
+% Beamer theme
+\usetheme{ZMBZFMK}
+\usefonttheme[onlysmall]{structurebold}
+\mode<presentation>
+\setbeamercovered{transparent=10}
+
+% align spacing
+\setlength{\jot}{0pt}
+
+%\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+
+\title{Évaluation empirique des actifs via le Machine Learning}
+\subtitle{Superviseurs : Léonard Thelot \& Ban Zheng}
+
+\author{Tagne Bonjawo\\ Clara Verret\\ Etienne Lefranc \\ Oussama Fouad \\ Lamiaa El Bouchattaoui  }
+\institute[CentraleSupélec]{}
+\date{Mars, 2023}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Sommaire}
+  \tableofcontents
+\end{frame}
+
+\section{Prédiction des rendements à l'aide des différentes méthodes de Machine Learning}
+
+\subsection{Traitement des données}
+\begin{frame}{Traitement des données}
+
+\includegraphics[scale=0.7]{Presentation/Val NAN.png}\\
+\begin{center}
+   Résolution du problème des valeurs NaN 
+\end{center}
+
+
+\includegraphics[scale=0.7]{Presentation/rÃ©so val NAN.png}
+
+\end{frame}
+
+\subsection{Régression linéaires}
+\begin{frame}{Régression linéaire : principe}
+\begin{center}
+    \includegraphics[scale=0.5]{Le rapport/fig0.pdf} 
+\end{center}
+
+\end{frame}
+\begin{frame}{Régression linéaire : résultats}
+Comparaison valeur réelle - valeur prédite pour le modèle de régression linéaire simple
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/scater_Classic_L2.pdf}
+\end{center}
+
+Valeur $R^2$ sur les données de test : 0.274
+%\includegraphics[scale=0.6]{Presentation/00.72.png}%
+
+\end{frame}
+
+\begin{frame}{Régression linéaire : caractéristiques}
+Importance des caractéristiques pour le modèle de régression linéaire sans pénalisation
+\begin{center}
+   \includegraphics[scale=0.3]{Presentation/Img/coef_class_regreg.pdf} 
+\end{center}
+\end{frame}
+
+\begin{frame}{Régression linéaire : \normalsize{3 meilleures composantes}}
+Comparaison valeur réelle - valeur prédite pour le modèle de régression linéaire avec les trois meilleures composantes (OLS-3+H)
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/scater_Ols_h.pdf}
+\end{center}
+
+Valeur $R^2$ sur les données de test : 0.299
+\end{frame}
+
+\begin{frame}{Régression linéaire : \normalsize{pénalisation Elastic Net}}
+Comparaison valeur réelle - valeur prédite pour le modèle de régression linéaire avec une pénalisation Élastic-net (Enet+H)
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/scater_enet_h.pdf}
+\end{center}
+
+Valeur $R^2$ sur les données de test : 0.269
+\end{frame}
+\begin{frame}{Régression linéaire : caractéristiques}
+Importance des caractéristiques: Comparaison Linéaire classique - Enet+H
+\begin{center}
+   \includegraphics[scale=0.3]{Presentation/Img/coef_compar_class_enet.pdf} 
+\end{center}
+\end{frame}
+\begin{frame}{Modèles Linéaires : performances}
+
+\begin{itemize}
+    \item Amélioration du score $R^2$ : Le modèle OLS-3+H a une valeur de $R^2$ légèrement supérieure comparée au modèle linéaire classique et à l'élastic-net. 
+    \item Le score $R^2$ avec le modèle élastic-net - qui est le modèle le plus "complexe" entre tous ces modèles - est bien plus faible que celui des autres. 
+\end{itemize}
+
+
+\end{frame}
+
+\subsection{Modèles PCR et PLS}
+\begin{frame}{Modèles PCR et PLS : principe}
+Rappel :
+\begin{itemize}
+    \item PCR = PCA + modèle de régression : pour maximiser la variance (modèle non supervisé)
+    \item PLS + modèle de régression : pour maximiser la covariance (modèle supervisé)
+\end{itemize}
+
+\begin{center}
+   \includegraphics[scale=0.35]{Le rapport/IllustrationPCA.png} 
+\end{center}
+On utilisera le modèle de régression Elastic Net
+\end{frame}
+
+\begin{frame}{Modèles PCR et PLS : résultats}
+Modèle PCR:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/scater_pca.pdf}
+\end{center}
+
+Valeur $R^2$ sur les données de test : 0.27
+
+\end{frame}
+\begin{frame}{Modèles PCR et PLS : résultats}
+Modèle PLS:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/scater_pls.pdf}
+\end{center}
+Valeur $R^2$ sur les données de test : 0.28
+ %\includegraphics[scale=0.7]{Presentation/00.74.png}
+ %\includegraphics[scale=0.75]{Presentation/00.75.png} 
+
+
+\end{frame}
+
+\begin{frame}{Modèles PCR et PLS : performances}
+\underline{Nombre de composantes retenues :}
+\begin{itemize}
+    \item PCR : 29 composantes sur 40 pour expliquer 95\% de la variance
+    \item PLS : 17 composantes 
+\end{itemize}
+\underline{Intéret de la dimension de réduction :}
+\begin{itemize}
+    \item Amélioration du $R^2$ : certaines caractéristiques sont redondantes ou créent du bruit.
+    \item Le score $R^2$ est du même ordre de grandeur pour les stocks avec  la plus petite capitalisation boursière et ceux avec la plus grande capitalisation boursière : les modèles ont les mêmes performances quelque soit l'échelle.
+\end{itemize}
+
+
+\end{frame}
+
+\subsection{Réseaux de neurones}
+\begin{frame}{Modèles de réseaux de neurones : principe}
+\begin{center}
+    \includegraphics[scale=0.5]{Le rapport/00.56.png}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Modèles de réseaux de neurones : \small{résultats}}
+Résultats pour 3 couches:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/scater_nn3.pdf}
+\end{center}
+Valeur $R^2$ sur les données de test : 0.27
+\end{frame}
+\begin{frame}{Modèles de réseaux de neurones : \small{résultats}}
+
+Résultats pour 4 couches:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/scater_nn4.pdf}
+\end{center}
+Valeur $R^2$ sur les données de test : 0.29
+
+
+%\includegraphics[scale=0.5]{Presentation/00.77.png} %
+\end{frame}
+\begin{frame}{Modèles de réseaux de neurones : \small{résultats}}
+
+Résultats pour 5 couches:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/scater_nn4.pdf}
+\end{center}
+Valeur $R^2$ sur les données de test : 0.27
+
+%\includegraphics[scale=0.5]{Presentation/00.78.png} %
+
+\end{frame}
+
+\begin{frame}{Réseaux de neurones : performances}
+\begin{itemize}
+    \item Le score $R^2$ des trois modèles réseaux de neurones sont semblables.
+    \item Le score $R^2$ des modèles de réseaux de neurones sont semblables aux scores des modèles linéaires, ce qui signifie qu'ajouter de la non-linéarité n'est pas pertinent pour la prédiction de nos rendements.
+\end{itemize}
+\end{frame}
+
+\subsection{RF \& GBR}
+\begin{frame}{Random Forest : principe}
+\begin{center}
+    \includegraphics[scale=0.9]{Le rapport/arbre.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Random Forest : résultats}
+Résultats obtenus pour ce modèle:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/scater_rf.pdf}
+    %\includegraphics[scale=0.7]{Presentation/00.79.png}%
+\end{center}
+Valeur $R^2$ sur les données de test : 0.32
+
+\end{frame}
+
+
+
+
+\begin{frame}{Gradient Boosting : principe}
+\begin{center}
+    \includegraphics[scale=0.4]{Presentation/Schematical-representation-of-gradient-boosting-regression-in-regards-to-algorithm.png}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Gradient Boosting : résultats}
+Résultats obtenus pour ce modèle:
+\begin{center}
+    \includegraphics[scale=0.4]{Presentation/Img/scater_gbr.pdf}
+    %\includegraphics[scale=0.6]{Presentation/00.80.png}%
+\end{center}
+Valeur $R^2$ sur les données de test : 0.30
+\end{frame}
+\subsection{Comparaison des résultats}
+
+
+\begin{frame}{Comparaison des résultats}
+\begin{center}
+    \includegraphics[scale=0.54]{Presentation/Img/Compared_R2_models.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}{Comparaison des résultats}
+Importance des caractéristiques dans la prévision du rendement
+\begin{center}
+   \includegraphics[scale=0.4]{Presentation/Img/coef_compar_reduit_legende.png} 
+\end{center}
+\end{frame}
+
+\begin{frame}{Comparaison des résultats}
+Les modèles sont cohérents sur les caractéristiques jugées importantes. Ce sont les suivantes :
+\begin{itemize}
+    \item Indicateur momentum : indicateur technique permettant de mesurer la vitesse et le sens d'évolution d'un actif sur les marchés financiers
+    \item Volatilité : indicateur de la dispersion de ses rendements par rapport à une moyenne sur une période de temps donnée
+    \item Indicateur "relative reversal"
+    \item Indicateur "momentum reversal"
+\end{itemize}
+On appelle "reversal" toute période durant laquelle le prix d'un actif change de direction et commence une nouvelle tendance. C'est l'un des indicateurs de trading les plus utiles sur le marché financier.
+\end{frame}
+
+
+\section{L'expanding Window}
+\begin{frame}{L'expanding Window}
+Expanding window avec Elastic-Net:
+\begin{center}
+    \includegraphics[scale=0.54]{Presentation/00.82.png}
+\end{center}
+\end{frame}
+\begin{frame}{L'expanding Window}
+Expanding window avec OLS-3 + H:
+\begin{center}
+    \includegraphics[scale=0.54]{Presentation/00.83.png}
+\end{center}
+\end{frame}
+\begin{frame}{L'expanding Window}
+Expanding window avec PCR:
+\begin{center}
+    \includegraphics[scale=0.54]{Presentation/00.84.png}
+\end{center}
+\end{frame}
+\begin{frame}{L'expanding Window}
+Expanding window avec PLS:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/expand_wind_PLS.pdf}
+\end{center}
+\end{frame}
+\begin{frame}{L'expanding Window}
+Expanding window avec Gradient Boosting:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/expand_wind_GBR.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}{L'expanding Window}
+Expanding window avec Random Forest:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/expand_wind_RF.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}{L'expanding Window}
+Expanding window avec NN3:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/expand_wind_NN3.pdf}
+\end{center}
+\end{frame}
+\begin{frame}{L'expanding Window}
+Expanding window avec NN4:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/expand_wind_NN4.pdf}
+\end{center}
+\end{frame}
+\begin{frame}{L'expanding Window}
+Expanding window avec NN5:
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/expand_wind_NN5.pdf}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Expanding vs sans expanding window }
+Résultats en prenant tous les stocks:
+\begin{center}
+    \includegraphics[scale=0.5]{Presentation/Img/expandvswithoutexpand_all.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}{Expanding vs without expanding window }
+Résultats en prenant les stocks avec la plus grande capitalisation boursière:
+\begin{center}
+    \includegraphics[scale=0.5]{Presentation/Img/expandvswithoutexpand_top.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}{Expanding vs without expanding window }
+Résultats en prenant les stocks avec la plus petite capitalisation boursière:
+\begin{center}
+    \includegraphics[scale=0.5]{Presentation/Img/expandvswithoutexpand_bottom.pdf}
+\end{center}
+\end{frame}
+
+\section{Application aux portefeuilles}
+
+\begin{frame}{Application aux portefeuilles : OLS-3+H}
+Comparaison entre l'espérance du portefeuille attendue et réelle dans le cas où les stocks achetés et vendus changent chaque mois et les stocks achetés et vendus sont fixés
+
+\begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/estim_port_OLS-3+H.pdf}
+\end{center}
+\end{frame} 
+
+\begin{frame}{Application aux portefeuilles : Enet+H}
+\begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/estim_port_Enet+H.pdf}
+\end{center}
+MaxDD = 0.63
+Turnover = 3.35
+\end{frame}
+
+\begin{frame}{Application aux portefeuilles : PCR}
+\begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/estim_port_PCR.pdf}
+\end{center}
+MaxDD = 0.54
+Turnover = 3.42
+\end{frame} 
+
+\begin{frame}{Application aux portefeuilles : PLS}
+\begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/estim_port_PLS.pdf}
+\end{center}
+MaxDD = 0.58
+Turnover = 3.39
+\end{frame}
+
+\begin{frame}{Application aux portefeuilles : GBr}
+\begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/estim_port_GBR.pdf}
+\end{center}
+MaxDD = 0.41
+Turnover = 3.33
+\end{frame} 
+
+\begin{frame}{Application aux portefeuilles :\small{Random Forest}}
+\begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/estim_port_RF.pdf}
+\end{center}
+MaxDD = 0.20
+Turnover = 3.56
+\end{frame}
+
+\begin{frame}{Application aux portefeuilles : NN3}
+\begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/estim_port_NN3.pdf}
+\end{center}
+MaxDD = 0.41
+Turnover = 3.56
+\end{frame}   
+
+\begin{frame}{Application aux portefeuilles : NN4}
+\begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/estim_port_NN4.pdf}
+\end{center}
+\end{frame}  
+
+\begin{frame}{Application aux portefeuilles : NN5}
+\begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/estim_port_NN5.pdf}
+\end{center}
+\end{frame}  
+
+\begin{frame}{Comparaison des espérances}
+Cas 1 : les stocks achetés et vendus sont fixés
+\begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/compar_port_returns.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}{Comparaison des espérances}
+Cas 2 : les stocks achetés et vendus changent à chaque mois
+    \begin{center}
+    \includegraphics[scale=0.25]{Presentation/Img/compar_port_switch_returns.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}{Espérances cumulées}
+Espérance cumulées des portefeuilles pour chaque modèle
+\begin{center}
+    \includegraphics[scale=0.3]{Presentation/Img/Cumulated_returns.pdf}
+\end{center}
+\end{frame} 
+
+\section{Conclusion}
+\begin{frame}{Conclusion}
+En considérant tous les stocks, avec l'expanding window, le plus grand $R^2$ est obtenu avec le modèle Random Forest et vaut 0.4.
+On obtient, à portefeuille fixé, des rendements à peu près égaux pour tous les modèles.
+
+\end{frame}
+
+\end{document}
